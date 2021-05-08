@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout :: head">
+
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <header th:replace="layout :: header"></header>
+        <div class="container">
+            <br/>
+            <div class="card">
+                <div class="card-header">
+                    <div class="tituloPrincipal">INFORMACIÓN DE USUARIO</div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4"><b class="tituloTexto">NOMBRE: </b>
+                                <label class="descTexto" th:text="${usuario.nombreCompleto}"></label>
+                            </div>
+                            <div class="col-md-4"><b class="tituloTexto">USUARIO: </b>
+                                <label class="descTexto" th:text="${usuario.userName}"></label>
+                            </div>
+                            <div class="col-md-4"><b class="tituloTexto">CORREO: </b>
+                                    <label class="descTexto" th:text="${usuario.correo}"></label>
+                                </div>
+                        </div>
+                        <hr>
+                            <div class="row">
+                                <div class="col-md-4"><b class="tituloTexto">TELEFONO: </b>
+                                    <label class="descTexto" th:text="${usuario.telefono}"></label>
+                                </div>
+                                <div class="col-md-4"><b class="tituloTexto">INMUEBLE ASIGNADO: </b>
+                                    <label class="descTexto" th:text="${usuario.noInmueble == null ? 'No tiene' : usuario.noInmueble}"></label>
+                                </div>
+                            </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+            <br/>
+            <div class="card">
+                <div class="card-header">
+                    <div class="tituloPrincipal">INFORMACIÓN DE ENCUESTA</div>
+                </div>
+                <div class="card-body">
+                    <div class="panel-body">
+                    <a th:href="@{/usuario/cuestionario/responder/1}">Responder Encuesta</a>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>

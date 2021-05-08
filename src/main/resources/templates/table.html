@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout :: head">
+        
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script src="../../static/js/alerta.js"></script>
+    </head>
+    <body>
+        <header th:replace="layout :: header"></header>
+        
+        <div class="container mt-4" >
+            <center><b class="tituloPrincipal">[[${tipoConstruccion}]]</b></center>
+            
+             <table class="table table-bordered tablaEstadoFisico">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:12%">BUENO</th>
+                            <th style="width:12%">MALO</th>
+                            <th style="width:12%">REGULAR</th>
+                            <th style="width:12%">N/A</th>
+                            <th style="width:12%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:40%">
+                                CONSTRUIDOS PARA USO EDUCATIVO
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoEducativo" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularEducativo" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloEducativo" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naEducativo" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalEducativo" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                PROVISIONALES
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoProvisionales" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularProvisionales" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloProvisionales" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naProvisionales" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalProvisionales" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                ADAPTADOS
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoAdaptados" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularAdaptados" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloAdaptados" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naAdaptados" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalAdaptados" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                LOCALES FUERA DEL INMUEBLE PRINCIPAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoFueraInmueble" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularFueraInmueble" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloFueraInmueble" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naFueraInmueble" onchange="sumartotal()" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalFueraInmueble" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                TOTAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalBuenos" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalRegulares" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalmalos" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalNas" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalTotal" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            <table>
+                <thead>
+                    <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:20%">MUROS</th>
+                            <th style="width:20%">TECHOS</th>
+                            <th style="width:20%">PISOS</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td style="width:40%">
+                                MATERIAL PREDOMINANTE DE LA CONSTRUCCION
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            
+            
+            <center><b class="tituloPrincipal">ADMINISTRACION</b></center>
+            
+            <table class="table table-bordered tablaAnexo">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">  </th>
+                            <th style="width:15%">BUENO</th>
+                            <th style="width:15%">MALO</th>
+                            <th style="width:15%">REGULAR</th>
+                            <th style="width:15%">N/A</th>
+                            <th style="width:20%">UTILIZADOS POR TODOS LOS C.T.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:20%">
+                                ADMINISTRACION
+                            </td>
+                            <td style="width:15%">
+                                <input id="buenoEducativo1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="regularEducativo1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="maloEducativo1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="naEducativo1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <div class="custom-control custom-switch">
+                                    <center>
+                                    <input type="checkbox" class="custom-control-input" id="utilizadosTodosCt">
+                                    <label class="custom-control-label" for="utilizadosTodosCt"></label>
+                                    </center>
+                                  </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%">
+                                SUPERFICIE (Mts2)
+                            </td>
+                            <td style="width:15%">
+                                <input id="buenoProvisionales1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="regularProvisionales1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="maloProvisionales1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:15%">
+                                <input id="naProvisionales1" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            
+            
+            <section class="row">
+  <div class="col-md-12">
+  <div class="form-group">
+  <div id="accordion"> <div class="card">
+        <div class="card-header" id="heading1">
+        <h5 class="mb-0">
+        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+          AULAS        </button>
+        </h5>
+        </div><div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordion">
+      <center><b class="tituloPrincipal">AULAS</b></center> </br><table class="table table-bordered tablaEstadoFisico">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:12%">BUENO</th>
+                            <th style="width:12%">MALO</th>
+                            <th style="width:12%">REGULAR</th>
+                            <th style="width:12%">N/A</th>
+                            <th style="width:12%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:40%">
+                                CONSTRUIDOS PARA USO EDUCATIVO
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoEducativo_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularEducativo_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloEducativo_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naEducativo_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalEducativo_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                PROVISIONALES
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoProvisionales_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularProvisionales_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloProvisionales_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naProvisionales_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalProvisionales_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                ADAPTADOS
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoAdaptados_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularAdaptados_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloAdaptados_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naAdaptados_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalAdaptados_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                LOCALES FUERA DEL INMUEBLE PRINCIPAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoFueraInmueble_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularFueraInmueble_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloFueraInmueble_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naFueraInmueble_1" onchange="sumartotal(1)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalFueraInmueble_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                TOTAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalBuenos_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalRegulares_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalmalos_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalNas_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalTotal_1" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            <table>
+                <thead>
+                    <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:20%">MUROS</th>
+                            <th style="width:20%">TECHOS</th>
+                            <th style="width:20%">PISOS</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td style="width:40%">
+                                MATERIAL PREDOMINANTE DE LA CONSTRUCCION
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table></br>            
+            </div>
+            </div> <div class="card">
+        <div class="card-header" id="heading2">
+        <h5 class="mb-0">
+        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+          LABORATORIOS        </button>
+        </h5>
+        </div><div id="collapse2" class="collapse show" aria-labelledby="heading2" data-parent="#accordion">
+      <center><b class="tituloPrincipal">LABORATORIOS</b></center> </br><table class="table table-bordered tablaEstadoFisico">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:12%">BUENO</th>
+                            <th style="width:12%">MALO</th>
+                            <th style="width:12%">REGULAR</th>
+                            <th style="width:12%">N/A</th>
+                            <th style="width:12%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:40%">
+                                CONSTRUIDOS PARA USO EDUCATIVO
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoEducativo_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularEducativo_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloEducativo_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naEducativo_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalEducativo_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                PROVISIONALES
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoProvisionales_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularProvisionales_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloProvisionales_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naProvisionales_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalProvisionales_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                ADAPTADOS
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoAdaptados_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularAdaptados_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloAdaptados_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naAdaptados_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalAdaptados_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                LOCALES FUERA DEL INMUEBLE PRINCIPAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoFueraInmueble_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularFueraInmueble_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloFueraInmueble_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naFueraInmueble_2" onchange="sumartotal(2)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalFueraInmueble_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                TOTAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalBuenos_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalRegulares_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalmalos_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalNas_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalTotal_2" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            <table>
+                <thead>
+                    <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:20%">MUROS</th>
+                            <th style="width:20%">TECHOS</th>
+                            <th style="width:20%">PISOS</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td style="width:40%">
+                                MATERIAL PREDOMINANTE DE LA CONSTRUCCION
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table></br>            
+            </div>
+            </div> <div class="card">
+        <div class="card-header" id="heading3">
+        <h5 class="mb-0">
+            <button type="button" style="color: transparent; -webkit-text-stroke: 2px black;" class="btn btn-link" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+          TALLERES        </button>
+        </h5>
+        </div><div id="collapse3" class="collapse show" aria-labelledby="heading3" data-parent="#accordion">
+      <center><b class="tituloPrincipal">TALLERES</b></center> </br><table class="table table-bordered tablaEstadoFisico">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:12%">BUENO</th>
+                            <th style="width:12%">MALO</th>
+                            <th style="width:12%">REGULAR</th>
+                            <th style="width:12%">N/A</th>
+                            <th style="width:12%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:40%">
+                                CONSTRUIDOS PARA USO EDUCATIVO
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoEducativo_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularEducativo_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloEducativo_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naEducativo_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalEducativo_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                PROVISIONALES
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoProvisionales_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularProvisionales_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloProvisionales_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naProvisionales_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalProvisionales_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                ADAPTADOS
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoAdaptados_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularAdaptados_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloAdaptados_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naAdaptados_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalAdaptados_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                LOCALES FUERA DEL INMUEBLE PRINCIPAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="buenoFueraInmueble_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="regularFueraInmueble_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="maloFueraInmueble_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="naFueraInmueble_3" onchange="sumartotal(3)" type="number" min="0" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalFueraInmueble_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                TOTAL
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalBuenos_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalRegulares_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalmalos_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalNas_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                            <td style="width:12%">
+                                <input id="totalTotal_3" type="number" disabled="true" class="form-control" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            <table>
+                <thead>
+                    <tr>
+                            <th style="width:40%">  </th>
+                            <th style="width:20%">MUROS</th>
+                            <th style="width:20%">TECHOS</th>
+                            <th style="width:20%">PISOS</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td style="width:40%">
+                                MATERIAL PREDOMINANTE DE LA CONSTRUCCION
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                            <td style="width:20%">
+                                <input type="number" class="form-control" required/>
+                            </td>
+                        </tr>
+                </tbody>
+            </table></br>           
+            </div>
+            </div></div></div>
+ </div>
+ </section><br/>
+            
+            
+            
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout :: head">
+
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <header th:replace="layout :: header"></header>
+        <div class="container mt-2 col-lg-6">
+            <div class="card border-info">
+                <div class="panel-group">
+                    <div class="card">
+                        <div class="card-header">
+                            <center><h5 class="card-title"><label th:text="${username}"></label></h5></center>
+                        </div>
+                        <div class="card-body">
+                            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" 
+                                th:if="${mensaje != null}"
+                                class="alert alert-dismissable">
+                               <button type="button" class="close" data-dismiss="alert">&times;</button>
+                               <center><strong><div th:text="${mensaje}"></div></strong></center>
+                           </div>
+                            <h5 class="card-title"><strong>Inmueble asignado:</strong> 
+                                <label style="color: #495057;" th:text="${inmuebleAsignado == 0 ? 'No tiene Inmueble asignado' : inmuebleAsignado}"></label>
+                                <button th:if="${inmuebleAsignado != 0}" class="btn btn-info" type="button" th:onclick="listCentrosTrabajoInmueble()">
+                                    <i class="fa fa-search-plus" aria-hidden="true"></i> Ver Detalle</button>
+                            </h5>
+                            <hr/>
+                            <center><button class="btn btn-primary" type="button" th:onclick="showAsignarInmueble()">
+                                    <i class="fa fa-building-o" aria-hidden="true"></i> Asignar nuevo inmueble a usuario</button></center>
+                            <input type="hidden" th:value="${inmuebleAsignado}" id="inmuebleAsignado" />
+                            <hr/>
+                         <a th:href="@{/admin/usuarios}">Regresar</a>
+                        </div>
+                        <input type="hidden" th:value="${noUsuario}" id="noUsuario" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="asignarInmuebleModal" tabindex="-1" role="dialog" aria-hidden="true" th:fragment="modalAsignarInmueble">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title" id="myModalChangeLabel">Busqueda de Centro de trabajo.</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="opcionesAsignarInmueble" class="card-body table-responsive-md">
+                            <div class="input-group">
+                                <input id="claveArea" type="text" class="form-control" placeholder="ESCRIBE CLAVE AREA" name="claveArea" required>
+                                <div class="input-group-append">
+                                    <button id="inmueblesList" class="btn btn-primary" type="button" th:onclick="searchInmueble()"> <span class="fa fa-search"></span> </button>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-sm table-hover table-bordered table-wrapper-scroll-y my-custom-scrollbar" id="tablaDatosInmuebles">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 2%;">NO INMUEBLE</th>
+                                        <th style="width: 15%;">CLAVE AREA</th>
+                                        <th style="width: 65%;">NOMBRE CT</th>
+                                        <th style="width: 16%;">TURNO</th>
+                                        <th style="width: 3%;">ASIGNAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datosInmuebles">
+                                    <tr th:each="dato: ${centrosTrabajo}">
+                                        <td style="width: 2%;" th:text="${dato.noInmueble}"></td>
+                                        <td style="width: 15%;" th:text="${dato.claveArea}"></td>
+                                        <td style="width: 65%;" th:text="${dato.nombreCt}"></td>
+                                        <td style="width: 16%;" th:text="${dato.turno}"></td>
+                                        <td style="width: 3%;">
+                                            <form method="post" action="#" th:action="@{/admin/usuarios/asignarInmueble(noInmueble=${dato.noInmueble}, noUsuario=${noUsuario})}">
+                                                <button class="btn btn-primary" style="font-size:smaller;" type="submit">
+                                                    <i class="fa fa-check" title="Asignar"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="centrosTrabajoDeInmuebleModalHolder"></div>
+
+        <div class="modal fade" id="centrosTrabajoDeInmuebleModal" tabindex="-1" role="dialog" aria-hidden="true" th:fragment="modalCentrosTrabajoDeInmueble">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title" id="myModalChangeLabel">El inmueble: [[${inmuebleAsignado}]] lo comparten los siguientes Centros de trabajo.</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-sm table-hover table-bordered table-wrapper-scroll-y my-custom-scrollbar" id="tablaDatos">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">NO CENTRO</th>
+                                    <th style="width: 20%;">CLAVE AREA</th>
+                                    <th style="width: 60%;">NOMBRE CT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="dato : ${centrosTrabajo}">
+                                    <td style="width: 20%;" th:text="${dato.noCentro}"></td>
+                                    <td style="width: 20%;" th:text="${dato.claveArea}"></td>
+                                    <td style="width: 60%;" th:text="${dato.nombreCt}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

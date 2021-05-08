@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout :: head">
+
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <header th:replace="layout :: header"></header>
+        <div class="container mt-2 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <center><b class="tituloPrincipal">Agregar Usuario</b></center>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate method="post" action="#" th:action="@{/admin/usuarios/add}" th:object="${usuario}">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6"><b class="tituloTexto">Usuario: </b>
+                                    <input type="text" name="userName" class="form-control" required/>
+                                    <div class="invalid-feedback">Username es requerido</div>
+                                </div>
+                                <div class="col-md-6"><b class="tituloTexto">Password: </b>
+                                    <input type="text" name="password" class="form-control" required/>
+                                    <div class="invalid-feedback">password es requerido</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"><b class="tituloTexto">Nombre: </b>
+                                    <input type="text" name="nombre" class="form-control" required/>
+                                    <div class="invalid-feedback">Nombre es requerido</div>
+                                </div>
+                                <div class="col-md-6"><b class="tituloTexto">Apellido Paterno: </b>
+                                    <input type="text" name="apellidoPaterno" class="form-control" required/>
+                                    <div class="invalid-feedback">Apellido Paterno es requerido</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6"><b class="tituloTexto">Apellido Materno: </b>
+                                    <input type="text" name="apellidoMaterno" class="form-control" required/>
+                                    <div class="invalid-feedback">Apellido Materno es requerido</div>
+                                </div>
+                                <div class="col-md-6"><b class="tituloTexto">Correo: </b>
+                                    <input type="email" name="correo" class="form-control" required/>
+                                    <div class="invalid-feedback">Proporciona un Correo valido</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6"><b class="tituloTexto">Telefono: </b>
+                                    <input type="tel" name="telefono" class="form-control" required>
+                                    <div class="invalid-feedback">Telefono es requerido</div>
+                                </div>
+                                <div class="col-md-6"><b class="tituloTexto">Telefono2: </b>
+                                    <input type="tel" name="telefono2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="valid-feedback">
+                                Todo bien.
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor proporcione telefono valido.
+                            </div>
+                            <br/>
+                            <br/>
+                            <input type="submit" class="btn btn-success" value="Agregar">
+                            <a th:href="@{/admin/usuarios}">Regresar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
